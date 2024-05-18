@@ -1,33 +1,132 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { UpdateResourceDto } from './dto/update-resource.dto';
 import { Task } from 'prisma/prisma-client';
 import { ITask } from './resource.interface';
+import { DbService } from 'src/database/db.service';
 
 @Injectable()
 export class ResourceService implements ITask {
-  CreateTask(data: CreateResourceDto): Promise<Task> {
-    throw new Error('Method not implemented.');
+  /**
+   *
+   */
+  constructor(private readonly db: DbService) {}
+  async CreateTask(data: CreateResourceDto): Promise<Task> {
+    try {
+      let query = await this.db.task.create({
+        data: {
+          title: data['title'],
+          userId: data['userId'],
+          is_done: false,
+        },
+      });
+      return query;
+    } catch (error) {
+      throw new BadRequestException(undefined, {
+        description: error,
+      });
+    }
   }
-  DeleteTask(id: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  async DeleteTask(id: string): Promise<boolean> {
+    try {
+      let query = await this.db.task.delete({
+        where: {
+          id: id,
+        },
+      });
+      return true;
+    } catch (error) {
+      throw new BadRequestException(undefined, {
+        description: error,
+      });
+    }
   }
-  findByTitle(title: string): Promise<Task> {
-    throw new Error('Method not implemented.');
+  async findByTitle(title: string): Promise<Task> {
+    try {
+      let query = await this.db.task.findFirstOrThrow({
+        where: {
+          title: title,
+        },
+      });
+      return query;
+    } catch (error) {
+      throw new BadRequestException(undefined, {
+        description: error,
+      });
+    }
   }
-  findByIsDone(flag: boolean): Promise<Task[]> {
-    throw new Error('Method not implemented.');
+  async findByIsDone(flag: boolean): Promise<Task[]> {
+    try {
+      let query = await this.db.task.findMany({
+        where: {
+          is_done: flag,
+        },
+      });
+      return query;
+    } catch (error) {
+      throw new BadRequestException(undefined, {
+        description: error,
+      });
+    }
   }
-  findByUserId(id: string): Promise<Task[]> {
-    throw new Error('Method not implemented.');
+  async findByUserId(id: string): Promise<Task[]> {
+    try {
+      let query = await this.db.task.findMany({
+        where: {
+          userId: id,
+        },
+      });
+      return query;
+    } catch (error) {
+      throw new BadRequestException(undefined, {
+        description: error,
+      });
+    }
   }
-  findById(id: string): Promise<Task> {
-    throw new Error('Method not implemented.');
+  async findById(id: string): Promise<Task> {
+    try {
+      let query = await this.db.task.findFirstOrThrow({
+        where: {
+          id: id,
+        },
+      });
+      return query;
+    } catch (error) {
+      throw new BadRequestException(undefined, {
+        description: error,
+      });
+    }
   }
-  getAll(): Promise<Task[]> {
-    throw new Error('Method not implemented.');
+  async getAll(): Promise<Task[]> {
+    try {
+      let query = await this.db.task.findMany({});
+      return query;
+    } catch (error) {
+      throw new BadRequestException(undefined, {
+        description: error,
+      });
+    }
   }
-  UpdateProperty(id: string, properties: UpdateResourceDto): Promise<Task> {
-    throw new Error('Method not implemented.');
+  async UpdateProperty(
+    id: string,
+    properties: UpdateResourceDto,
+  ): Promise<Task> {
+    try {
+      let query = await this.db.task.update({
+        data: {
+          is_done: properties['is_done'],
+          title: properties['title'],
+          userId: properties['userId'],
+        },
+        where: {
+          id: id,
+        },
+      });
+      return query;
+    } catch (error) {
+      throw new BadRequestException(undefined, {
+        description: error,
+      });
+    }
   }
 }

@@ -38,7 +38,7 @@ export class AuthService implements IAuth {
         const { ...result } = user;
         result;
       } else {
-        throw new UnauthorizedException();
+        // throw new UnauthorizedException();
       }
       let token = this.jwt.sign(user, {
         secret: process.env.HASH_SECRET || 'hash',

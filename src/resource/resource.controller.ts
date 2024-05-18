@@ -6,45 +6,53 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  ParseBoolPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { ResourceService } from './resource.service';
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { ITask } from './resource.interface';
 import { Task } from 'prisma/prisma-client';
+import { AuthGuard } from 'src/auth/gaurds/auth.guard';
 
 @Controller('resource')
+@UseGuards(AuthGuard)
 export class ResourceController implements ITask {
   constructor(private readonly resourceService: ResourceService) {}
   @Post('CreateTask')
-  CreateTask(data: CreateResourceDto): Promise<Task> {
-    throw new Error('Method not implemented.');
+  CreateTask(@Body() data: CreateResourceDto): Promise<Task> {
+    return this.resourceService.CreateTask(data);
   }
-  @Post('DeleteTask')
-  DeleteTask(id: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  @Delete(':id')
+  DeleteTask(@Param('id') id: string): Promise<boolean> {
+    return this.resourceService.DeleteTask(id);
   }
   @Post('findByTitle')
-  findByTitle(title: string): Promise<Task> {
-    throw new Error('Method not implemented.');
+  findByTitle(@Query('title') title: string): Promise<Task> {
+    return this.resourceService.findByTitle(title);
   }
   @Post('findByIsDone')
-  findByIsDone(flag: boolean): Promise<Task[]> {
-    throw new Error('Method not implemented.');
+  findByIsDone(@Query('flag', ParseBoolPipe) flag: boolean): Promise<Task[]> {
+    return this.resourceService.findByIsDone(flag);
   }
   @Post('findByUserId')
-  findByUserId(id: string): Promise<Task[]> {
-    throw new Error('Method not implemented.');
+  findByUserId(@Query('id') id: string): Promise<Task[]> {
+    return this.resourceService.findByUserId(id);
   }
   @Post('findById')
-  findById(id: string): Promise<Task> {
-    throw new Error('Method not implemented.');
+  findById(@Query('id') id: string): Promise<Task> {
+    return this.resourceService.findById(id);
   }
-  @Post('getAll')
+  @Get('getAll')
   getAll(): Promise<Task[]> {
-    throw new Error('Method not implemented.');
+    return this.resourceService.getAll();
   }
-  @Post('UpdateProperty')
-  UpdateProperty(id: string, properties: Partial<Task>): Promise<Task> {
-    throw new Error('Method not implemented.');
+  @Patch('UpdateProperty')
+  UpdateProperty(
+    @Query('id') id: string,
+    @Body() properties: Partial<Task>,
+  ): Promise<Task> {
+    return this.resourceService.UpdateProperty(id, properties);
   }
 }

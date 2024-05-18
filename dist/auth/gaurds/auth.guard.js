@@ -35,7 +35,7 @@ let AuthGuard = class AuthGuard extends (0, passport_1.PassportStrategy)(passpor
         }
     }
     async validate(bearerToken) {
-        const user = await this.auth.validate(bearerToken);
+        const user = await this.auth.SignIn(bearerToken);
         return user;
     }
 };

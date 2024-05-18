@@ -8,90 +8,103 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResourceController = void 0;
 const common_1 = require("@nestjs/common");
 const resource_service_1 = require("./resource.service");
 const create_resource_dto_1 = require("./dto/create-resource.dto");
+const auth_guard_1 = require("../auth/gaurds/auth.guard");
 let ResourceController = class ResourceController {
     constructor(resourceService) {
         this.resourceService = resourceService;
     }
     CreateTask(data) {
-        throw new Error('Method not implemented.');
+        return this.resourceService.CreateTask(data);
     }
     DeleteTask(id) {
-        throw new Error('Method not implemented.');
+        return this.resourceService.DeleteTask(id);
     }
     findByTitle(title) {
-        throw new Error('Method not implemented.');
+        return this.resourceService.findByTitle(title);
     }
     findByIsDone(flag) {
-        throw new Error('Method not implemented.');
+        return this.resourceService.findByIsDone(flag);
     }
     findByUserId(id) {
-        throw new Error('Method not implemented.');
+        return this.resourceService.findByUserId(id);
     }
     findById(id) {
-        throw new Error('Method not implemented.');
+        return this.resourceService.findById(id);
     }
     getAll() {
-        throw new Error('Method not implemented.');
+        return this.resourceService.getAll();
     }
     UpdateProperty(id, properties) {
-        throw new Error('Method not implemented.');
+        return this.resourceService.UpdateProperty(id, properties);
     }
 };
 __decorate([
     (0, common_1.Post)('CreateTask'),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_resource_dto_1.CreateResourceDto]),
     __metadata("design:returntype", Promise)
 ], ResourceController.prototype, "CreateTask", null);
 __decorate([
-    (0, common_1.Post)('DeleteTask'),
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ResourceController.prototype, "DeleteTask", null);
 __decorate([
     (0, common_1.Post)('findByTitle'),
+    __param(0, (0, common_1.Query)('title')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ResourceController.prototype, "findByTitle", null);
 __decorate([
     (0, common_1.Post)('findByIsDone'),
+    __param(0, (0, common_1.Query)('flag', common_1.ParseBoolPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Boolean]),
     __metadata("design:returntype", Promise)
 ], ResourceController.prototype, "findByIsDone", null);
 __decorate([
     (0, common_1.Post)('findByUserId'),
+    __param(0, (0, common_1.Query)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ResourceController.prototype, "findByUserId", null);
 __decorate([
     (0, common_1.Post)('findById'),
+    __param(0, (0, common_1.Query)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ResourceController.prototype, "findById", null);
 __decorate([
-    (0, common_1.Post)('getAll'),
+    (0, common_1.Get)('getAll'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ResourceController.prototype, "getAll", null);
 __decorate([
-    (0, common_1.Post)('UpdateProperty'),
+    (0, common_1.Patch)('UpdateProperty'),
+    __param(0, (0, common_1.Query)('id')),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], ResourceController.prototype, "UpdateProperty", null);
 ResourceController = __decorate([
     (0, common_1.Controller)('resource'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __metadata("design:paramtypes", [resource_service_1.ResourceService])
 ], ResourceController);
 exports.ResourceController = ResourceController;

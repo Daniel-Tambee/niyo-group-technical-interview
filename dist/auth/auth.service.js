@@ -46,7 +46,6 @@ let AuthService = class AuthService {
                 result;
             }
             else {
-                throw new common_1.UnauthorizedException();
             }
             let token = this.jwt.sign(user, {
                 secret: process.env.HASH_SECRET || 'hash',

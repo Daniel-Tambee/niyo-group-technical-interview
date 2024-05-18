@@ -7,15 +7,6 @@ export declare class AuthGuard extends AuthGuard_base implements CanActivate {
     private readonly auth;
     constructor(auth: AuthService);
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean>;
-    validate(bearerToken: string): Promise<{
-        id: string;
-        first_name: string;
-        last_name: string;
-        email: string;
-        phone_number: string;
-        password: string;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
+    validate(bearerToken: string): Promise<string>;
 }
 export {};
