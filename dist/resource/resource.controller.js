@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResourceController = void 0;
 const common_1 = require("@nestjs/common");
 const resource_service_1 = require("./resource.service");
+const swagger_1 = require("@nestjs/swagger");
 const create_resource_dto_1 = require("./dto/create-resource.dto");
 const auth_guard_1 = require("../auth/gaurds/auth.guard");
 let ResourceController = class ResourceController {
@@ -104,6 +105,7 @@ __decorate([
 ], ResourceController.prototype, "UpdateProperty", null);
 ResourceController = __decorate([
     (0, common_1.Controller)('resource'),
+    (0, swagger_1.ApiTags)('Resource(Todo)'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __metadata("design:paramtypes", [resource_service_1.ResourceService])
 ], ResourceController);

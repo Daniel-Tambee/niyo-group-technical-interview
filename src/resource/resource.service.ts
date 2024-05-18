@@ -4,28 +4,51 @@ import { UpdateResourceDto } from './dto/update-resource.dto';
 import { Task } from 'prisma/prisma-client';
 import { ITask } from './resource.interface';
 import { DbService } from 'src/database/db.service';
+import {
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+} from '@nestjs/websockets';
+import { Server, Socket } from 'socket.io';
 
 @Injectable()
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+  allowEIO3: true,
+  allowUpgrades: true,
+  serveClient: true,
+})
 export class ResourceService implements ITask {
   /**
    *
    */
+  @WebSocketServer() server: Server;
+
   constructor(private readonly db: DbService) {}
+  @SubscribeMessage('createTask')
   async CreateTask(data: CreateResourceDto): Promise<Task> {
     try {
+      console.log(data);
+
       let query = await this.db.task.create({
         data: {
           title: data['title'],
           User: {
             connect: {
-              id: data['UserId'],
+              id: data['userId'],
             },
           },
           is_done: false,
         },
       });
+      this.server.emit('taskCreated', query);
+
       return query;
     } catch (error) {
+      console.log(error);
+
       throw new BadRequestException(undefined, {
         description: error,
       });
