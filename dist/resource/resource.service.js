@@ -21,7 +21,11 @@ let ResourceService = class ResourceService {
             let query = await this.db.task.create({
                 data: {
                     title: data['title'],
-                    userId: data['userId'],
+                    User: {
+                        connect: {
+                            id: data['UserId'],
+                        },
+                    },
                     is_done: false,
                 },
             });
@@ -123,7 +127,7 @@ let ResourceService = class ResourceService {
         try {
             let query = await this.db.task.update({
                 data: {
-                    is_done: properties['is_done'],
+                    is_done: Boolean(properties['is_done']),
                     title: properties['title'],
                     userId: properties['userId'],
                 },
@@ -134,6 +138,7 @@ let ResourceService = class ResourceService {
             return query;
         }
         catch (error) {
+            console.log(error);
             throw new common_1.BadRequestException(undefined, {
                 description: error,
             });

@@ -16,7 +16,11 @@ export class ResourceService implements ITask {
       let query = await this.db.task.create({
         data: {
           title: data['title'],
-          userId: data['userId'],
+          User: {
+            connect: {
+              id: data['UserId'],
+            },
+          },
           is_done: false,
         },
       });
@@ -114,7 +118,7 @@ export class ResourceService implements ITask {
     try {
       let query = await this.db.task.update({
         data: {
-          is_done: properties['is_done'],
+          is_done: Boolean(properties['is_done']),
           title: properties['title'],
           userId: properties['userId'],
         },
@@ -124,6 +128,8 @@ export class ResourceService implements ITask {
       });
       return query;
     } catch (error) {
+      console.log(error);
+
       throw new BadRequestException(undefined, {
         description: error,
       });
