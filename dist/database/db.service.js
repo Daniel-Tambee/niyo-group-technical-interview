@@ -17,6 +17,9 @@ let DbService = class DbService extends prisma_client_1.PrismaClient {
         super({
             errorFormat: 'pretty',
         });
+        try {
+        }
+        catch (error) { }
     }
 };
 DbService = __decorate([

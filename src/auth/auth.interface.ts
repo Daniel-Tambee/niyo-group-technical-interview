@@ -13,8 +13,8 @@ export interface IAuth {
   SignIn(data: Partial<User>): Promise<string>;
   /**
    * a function that updates a user's password
-   *@param email
+   *@param password
    *@param id
    */
-  ForgotPassword(id: string, email: string): Promise<true>;
+  ForgotPassword(id: string, password: string): Promise<true>;
 }
