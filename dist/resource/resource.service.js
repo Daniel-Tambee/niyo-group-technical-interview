@@ -11,13 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResourceService = void 0;
 const common_1 = require("@nestjs/common");
-const create_resource_dto_1 = require("./dto/create-resource.dto");
 const db_service_1 = require("../database/db.service");
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 let ResourceService = class ResourceService {
-    constructor(db) {
+    constructor(db, logger) {
         this.db = db;
+        this.logger = logger;
+    }
+    handleConnection(client, ...args) {
+        const id = client['id'];
+        this.logger.verbose('user connected to socket with an id of ' + id);
     }
     async CreateTask(data) {
         try {
@@ -155,12 +159,6 @@ __decorate([
     (0, websockets_1.WebSocketServer)(),
     __metadata("design:type", socket_io_1.Server)
 ], ResourceService.prototype, "server", void 0);
-__decorate([
-    (0, websockets_1.SubscribeMessage)('createTask'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_resource_dto_1.CreateResourceDto]),
-    __metadata("design:returntype", Promise)
-], ResourceService.prototype, "CreateTask", null);
 ResourceService = __decorate([
     (0, common_1.Injectable)(),
     (0, websockets_1.WebSocketGateway)({
@@ -171,7 +169,8 @@ ResourceService = __decorate([
         allowUpgrades: true,
         serveClient: true,
     }),
-    __metadata("design:paramtypes", [db_service_1.DbService])
+    __metadata("design:paramtypes", [db_service_1.DbService,
+        common_1.Logger])
 ], ResourceService);
 exports.ResourceService = ResourceService;
 //# sourceMappingURL=resource.service.js.map

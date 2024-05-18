@@ -28,7 +28,16 @@ async function bootstrap() {
     const logger = new common_1.Logger('App', {
         timestamp: true,
     });
-    logger.log('app running on ' + 3000);
+    logger.verbose('*****************************************************');
+    logger.verbose('*****    app running on port 3000             *******');
+    logger.verbose('*****                                         *******');
+    logger.verbose('*****  (1)connect with  socket.io client      *******');
+    logger.verbose('*****  (2)subscribe to "taskCreated" event    *******');
+    logger.verbose('*****  http://localhost:3000/api for docs     *******');
+    logger.verbose('*****                                         *******');
+    logger.verbose('*****        Thank you  🚀🚀🚀🚀              *******');
+    logger.verbose('*****                                         *******');
+    logger.verbose('*****************************************************');
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

@@ -1,11 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { UpdateResourceDto } from './dto/update-resource.dto';
 import { Task } from 'prisma/prisma-client';
 import { ITask } from './resource.interface';
 import { DbService } from 'src/database/db.service';
 import {
-  SubscribeMessage,
+  OnGatewayConnection,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
@@ -20,14 +20,21 @@ import { Server, Socket } from 'socket.io';
   allowUpgrades: true,
   serveClient: true,
 })
-export class ResourceService implements ITask {
+export class ResourceService implements ITask, OnGatewayConnection {
   /**
    *
    */
   @WebSocketServer() server: Server;
 
-  constructor(private readonly db: DbService) {}
-  @SubscribeMessage('createTask')
+  constructor(
+    private readonly db: DbService,
+    private readonly logger: Logger,
+  ) {}
+  handleConnection(client: any, ...args: any[]) {
+    const id = client['id'];
+
+    this.logger.verbose('user connected to socket with an id of ' + id);
+  }
   async CreateTask(data: CreateResourceDto): Promise<Task> {
     try {
       console.log(data);
