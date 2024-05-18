@@ -70,4 +70,30 @@ export class AuthService implements IAuth {
       });
     }
   }
+  async validate(data: {}) {
+    try {
+      let user = await this.user.findByEmail(data['email']);
+
+      let verification = await verify(
+        user['password'] as string,
+        Buffer.from(data['password']),
+        {
+          secret: Buffer.from(process.env.HASH_SECRET || 'hash'),
+          type: 2,
+        },
+      );
+      console.log(verification);
+
+      if (user && verification) {
+        const { ...result } = user;
+        return result;
+      } else {
+        throw new UnauthorizedException();
+      }
+    } catch (error) {
+      throw new UnauthorizedException(undefined, {
+        description: 'wrong email or password',
+      });
+    }
+  }
 }

@@ -7,13 +7,16 @@ import {
   Delete,
   Logger,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { IUser } from './user.interface';
 import { User } from 'prisma/prisma-client';
+import { AuthGuard } from 'src/auth/gaurds/auth.guard';
 
 @Controller('user')
+@UseGuards(AuthGuard)
 export class UserController implements IUser {
   constructor(
     private readonly userService: UserService,

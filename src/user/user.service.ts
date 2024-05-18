@@ -26,7 +26,7 @@ export class UserService implements IUser {
           phone_number: data['phone_number'],
           password: await hash(data['password'] as string, {
             secret: Buffer.from(process.env.HASH_SECRET || 'hash'),
-            type: 0,
+            type: 2,
           }),
         },
       });

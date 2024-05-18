@@ -12,4 +12,14 @@ export declare class AuthService implements IAuth {
     SignUp(data: CreateUserDto): Promise<User>;
     SignIn(data: Partial<User>): Promise<string>;
     ForgotPassword(id: string, password: string): Promise<true>;
+    validate(data: {}): Promise<{
+        id: string;
+        first_name: string;
+        last_name: string;
+        email: string;
+        phone_number: string;
+        password: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
 }

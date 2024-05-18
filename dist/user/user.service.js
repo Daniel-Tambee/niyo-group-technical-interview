@@ -29,7 +29,7 @@ let UserService = class UserService {
                     phone_number: data['phone_number'],
                     password: await (0, argon2_1.hash)(data['password'], {
                         secret: Buffer.from(process.env.HASH_SECRET || 'hash'),
-                        type: 0,
+                        type: 2,
                     }),
                 },
             });

@@ -80,6 +80,28 @@ let AuthService = class AuthService {
             });
         }
     }
+    async validate(data) {
+        try {
+            let user = await this.user.findByEmail(data['email']);
+            let verification = await (0, argon2_1.verify)(user['password'], Buffer.from(data['password']), {
+                secret: Buffer.from(process.env.HASH_SECRET || 'hash'),
+                type: 2,
+            });
+            console.log(verification);
+            if (user && verification) {
+                const result = __rest(user, []);
+                return result;
+            }
+            else {
+                throw new common_1.UnauthorizedException();
+            }
+        }
+        catch (error) {
+            throw new common_1.UnauthorizedException(undefined, {
+                description: 'wrong email or password',
+            });
+        }
+    }
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),

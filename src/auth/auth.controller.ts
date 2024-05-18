@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { IAuth } from './auth.interface';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { User } from 'prisma/prisma-client';
