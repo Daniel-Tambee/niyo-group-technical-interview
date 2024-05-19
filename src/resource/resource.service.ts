@@ -10,6 +10,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 @WebSocketGateway({
