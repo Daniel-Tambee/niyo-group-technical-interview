@@ -13,6 +13,7 @@ exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const db_service_1 = require("../database/db.service");
 const argon2_1 = require("argon2");
+const schedule_1 = require("@nestjs/schedule");
 let UserService = class UserService {
     constructor(db, logger) {
         this.db = db;
@@ -144,7 +145,16 @@ let UserService = class UserService {
             throw new common_1.BadRequestException(error);
         }
     }
+    cronThing() {
+        this.logger.warn('dont go to sleep 🛌 ⏾');
+    }
 };
+__decorate([
+    (0, schedule_1.Cron)(schedule_1.CronExpression.EVERY_5_SECONDS),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], UserService.prototype, "cronThing", null);
 UserService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [db_service_1.DbService,

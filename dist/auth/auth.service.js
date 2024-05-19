@@ -49,6 +49,7 @@ let AuthService = class AuthService {
             }
             let token = this.jwt.sign(user, {
                 secret: process.env.HASH_SECRET || 'hash',
+                expiresIn: '2h',
             });
             return token;
         }
@@ -74,6 +75,7 @@ let AuthService = class AuthService {
             return true;
         }
         catch (error) {
+            console.log(error);
             throw new common_1.BadRequestException(undefined, {
                 description: error,
             });

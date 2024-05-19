@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const create_user_dto_1 = require("../user/dto/create-user.dto");
 const auth_service_1 = require("./auth.service");
 const swagger_1 = require("@nestjs/swagger");
+const auth_guard_1 = require("./gaurds/auth.guard");
 let AuthController = class AuthController {
     constructor(auth) {
         this.auth = auth;
@@ -47,6 +48,8 @@ __decorate([
 ], AuthController.prototype, "SignIn", null);
 __decorate([
     (0, common_1.Post)('ForgotPassword'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, swagger_1.ApiBearerAuth)('authorization'),
     __param(0, (0, common_1.Body)('id')),
     __param(1, (0, common_1.Body)('password')),
     __metadata("design:type", Function),

@@ -13,10 +13,13 @@ async function bootstrap() {
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Niyo Group Technical Interview')
         .setDescription(' a very basic todo backend built with nestjs and an sqlite database for the purpose of the technical interview along with a websocket server that logs created tasks ')
-        .addApiKey({
-        name: 'authorization',
+        .addBearerAuth({
         type: 'apiKey',
-    })
+        bearerFormat: 'bearer',
+        scheme: 'bearer',
+        in: 'header',
+        name: 'authorization',
+    }, 'authorization')
         .setContact('daniel tambee', '', 'danieltambee@gmail.com')
         .setVersion('1.0')
         .build();

@@ -31,7 +31,7 @@ let ResourceService = class ResourceService {
                     title: data['title'],
                     User: {
                         connect: {
-                            id: data['userId'],
+                            id: data['userid'],
                         },
                     },
                     is_done: false,

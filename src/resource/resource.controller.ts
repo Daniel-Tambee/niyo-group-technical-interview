@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ResourceService } from './resource.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { ITask } from './resource.interface';
@@ -21,6 +21,7 @@ import { AuthGuard } from 'src/auth/gaurds/auth.guard';
 @Controller('resource')
 @ApiTags('Resource(Todo)')
 @UseGuards(AuthGuard)
+@ApiBearerAuth('authorization')
 export class ResourceController implements ITask {
   constructor(private readonly resourceService: ResourceService) {}
   @Post('CreateTask')

@@ -12,11 +12,18 @@ const resource_module_1 = require("./resource/resource.module");
 const auth_module_1 = require("./auth/auth.module");
 const database_module_1 = require("./database/database.module");
 const user_module_1 = require("./user/user.module");
+const schedule_1 = require("@nestjs/schedule");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [resource_module_1.ResourceModule, auth_module_1.AuthModule, database_module_1.DatabaseModule, user_module_1.UserModule],
+        imports: [
+            resource_module_1.ResourceModule,
+            auth_module_1.AuthModule,
+            database_module_1.DatabaseModule,
+            user_module_1.UserModule,
+            schedule_1.ScheduleModule.forRoot(),
+        ],
         controllers: [],
         providers: [],
     })

@@ -13,12 +13,13 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { IUser } from './user.interface';
 import { User } from 'prisma/prisma-client';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags,ApiBearerAuth} from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/gaurds/auth.guard';
 
 @Controller('user')
 @ApiTags('User')
 @UseGuards(AuthGuard)
+@ApiBearerAuth("authorization")
 export class UserController implements IUser {
   constructor(
     private readonly userService: UserService,

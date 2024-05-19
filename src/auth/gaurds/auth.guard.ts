@@ -39,7 +39,6 @@ export class AuthGuard
     }
   }
   async validate(bearerToken: string) {
-
     const user = await this.auth.SignIn(bearerToken as unknown as User);
     return user;
   }

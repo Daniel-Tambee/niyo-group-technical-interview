@@ -3,7 +3,8 @@ import { IAuth } from './auth.interface';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { User } from 'prisma/prisma-client';
 import { AuthService } from './auth.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from './gaurds/auth.guard';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -22,6 +23,8 @@ export class AuthController implements IAuth {
     return this.auth.SignIn(data);
   }
   @Post('ForgotPassword')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth('authorization')
   ForgotPassword(
     @Body('id') id: string,
     @Body('password') password: string,

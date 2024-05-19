@@ -16,4 +16,5 @@ export declare class UserService implements IUser {
     findByUserId(id: string): Promise<User>;
     getAllUsers(): Promise<User[]>;
     UpdateProperty(id: string, properties: UpdateUserDto): Promise<User>;
+    cronThing(): void;
 }

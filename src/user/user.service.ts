@@ -5,6 +5,7 @@ import { IUser } from './user.interface';
 import { DbService } from 'src/database/db.service';
 import { User } from 'prisma/prisma-client';
 import { hash } from 'argon2';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class UserService implements IUser {
@@ -135,5 +136,10 @@ export class UserService implements IUser {
     } catch (error) {
       throw new BadRequestException(error);
     }
+  }
+
+  @Cron(CronExpression.EVERY_5_SECONDS)
+  cronThing() {
+    this.logger.warn('dont go to sleep 🛌 ⏾');
   }
 }

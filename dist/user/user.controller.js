@@ -100,6 +100,7 @@ UserController = __decorate([
     (0, common_1.Controller)('user'),
     (0, swagger_1.ApiTags)('User'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, swagger_1.ApiBearerAuth)("authorization"),
     __metadata("design:paramtypes", [user_service_1.UserService,
         common_1.Logger])
 ], UserController);

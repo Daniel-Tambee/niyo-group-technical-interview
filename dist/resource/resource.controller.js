@@ -107,6 +107,7 @@ ResourceController = __decorate([
     (0, common_1.Controller)('resource'),
     (0, swagger_1.ApiTags)('Resource(Todo)'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, swagger_1.ApiBearerAuth)('authorization'),
     __metadata("design:paramtypes", [resource_service_1.ResourceService])
 ], ResourceController);
 exports.ResourceController = ResourceController;

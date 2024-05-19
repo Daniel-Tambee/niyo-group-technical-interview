@@ -14,10 +14,16 @@ async function bootstrap() {
     .setDescription(
       ' a very basic todo backend built with nestjs and an sqlite database for the purpose of the technical interview along with a websocket server that logs created tasks ',
     )
-    .addApiKey({
-      name: 'authorization',
-      type: 'apiKey',
-    })
+    .addBearerAuth(
+      {
+        type: 'apiKey',
+        bearerFormat: 'bearer',
+        scheme: 'bearer',
+        in: 'header',
+        name: 'authorization',
+      },
+      'authorization',
+    )
     .setContact('daniel tambee', '', 'danieltambee@gmail.com')
     .setVersion('1.0')
     .build();

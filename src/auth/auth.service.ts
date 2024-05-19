@@ -42,6 +42,7 @@ export class AuthService implements IAuth {
       }
       let token = this.jwt.sign(user, {
         secret: process.env.HASH_SECRET || 'hash',
+        expiresIn: '2h',
       });
       return token;
     } catch (error) {
@@ -65,6 +66,7 @@ export class AuthService implements IAuth {
       });
       return true;
     } catch (error) {
+      console.log(error);
       throw new BadRequestException(undefined, {
         description: error,
       });

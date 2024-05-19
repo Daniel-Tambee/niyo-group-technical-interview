@@ -44,7 +44,7 @@ export class ResourceService implements ITask, OnGatewayConnection {
           title: data['title'],
           User: {
             connect: {
-              id: data['userId'],
+              id: data['userid'],
             },
           },
           is_done: false,
